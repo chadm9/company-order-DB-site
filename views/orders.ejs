@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/public/javascripts/scripts.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="col-sm-12">
+        <h1>Order Info</h1>
+
+        <p>Order Status: <%=orderDetails.orderStatus%></p>
+        <p>Order Number: <%=orderDetails.orderNumber%></p>
+        <p>Customer Name: <%=orderDetails.customerName%></p>
+        <p>Customer Number: <%=orderDetails.customerNumber%></p>
+        <p>Customer City: <%=orderDetails.customerCity%></p>
+        <p>Employee Name: <%=orderDetails.employeeFirstName + ' ' + orderDetails.employeeLastName%></p>
+        <p>Employee Office: <%=orderDetails.employeeOffice%></p>
+        <p>Employee Reports To: <%=orderDetails.employeeReportsTo%></p>
+
+        <p><br>Products Ordered and Product Totals </p>
+        <div class="col-sm-12">
+
+            <table class="table">
+                <tr>
+                    <th class="active">Product Name</th>
+                    <th class="success">Total Cost for Product</th>
+
+                </tr>
+
+            <% for(let i = 0; i < orderDetails.productNames.length; i++){ %>
+
+
+                <tr>
+                    <td><%=orderDetails.productNames[i] %></td>
+                    <td><%=orderDetails.totalPrices[i] %></td>
+
+                </tr>
+
+
+
+            <% } %>
+
+            </table>
+        </div>
+
+
+    </div>
+
+
+
+</div>
+</div>
+
+</body>
+</html>
