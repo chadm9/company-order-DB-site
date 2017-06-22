@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies-Chained-Promise</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        var apiUrl = 'https://api.themoviedb.org/3/search/movie?api_key=fec8b5ab27b292a68294261bb21b04a5&query=';
+
+        var movieApiUrl = 'https://api.themoviedb.org/3/movie/';
+        var peopleUrl = 'https://api.themoviedb.org/3/person/'
+        function getMovieResults(movieString){
+            // we need a promise because we have an asnyc operation (AJAX)
+            return new Promise((resolve, reject)=>{
+                // send off the AJAX request
+                $.getJSON(apiUrl + movieString,(theData)=>{
+                    // the anon function runs when AJAX is back... call resolve, so they know down below we are done.
+                    resolve(theData);
+                })
+            })
+        }
+        function getCast(movie){
+            var movieId = movie.id;
+            return new Promise((resolve, reject)=>{
+                $.getJSON(movieApiUrl+movieId+'/credits?api_key=fec8b5ab27b292a68294261bb21b04a5',(thisMovieData)=>{
+                    console.log(thisMovieData)
+                    resolve(thisMovieData);
+                });
+            });
+        }
+        function getPerson(person){
+            var personId = person.id;
+            return new Promise((resolve, reject)=>{
+                $.getJSON(peopleUrl+personId+'?api_key=fec8b5ab27b292a68294261bb21b04a5',(thisPersonData)=>{
+                    console.log(thisPersonData);
+                    resolve(thisPersonData);
+                });
+            });
+        }
+        // Store our promise in a var
+        var promise1 = getMovieResults('Interstellar');
+        // After the promise has run resolve THEN, run the next anon function.
+        // We get as a param in the anon function, wahtever resolve sent.
+        promise1.then((movieJSON)=>{
+            // console.log(movieJSON);
+            // return another promise (the result of getCast)
+            return getCast(movieJSON.results[0]);
+        }).then((castResult)=>{
+            // console.log(castResult);
+            return getPerson(castResult.cast[0]);
+        }).then((personInfo)=>{
+            console.log(personInfo);
+        })
+        // console.log(promise1);
+
+
+
+        //        /Users/mephisto/Desktop/DigitalCrafts/4-17immersive/unit3/js-301
+//        /Users/mephisto/Desktop/DigitalCrafts/4-17immersive/unit3/classic-models
+
+
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>
